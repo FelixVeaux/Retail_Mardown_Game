@@ -1,53 +1,76 @@
 # Retail Markdown Game Simulator
 
-This script automates playing the Retailer Game (https://www.randhawa.us/games/retailer/nyu.html) using different markdown pricing strategies to find the optimal approach.
+A simulation tool for analyzing retail markdown strategies in a competitive market environment. This project allows users to test different retail pricing strategies and observe their impact on profitability over a 15-week period.
 
-## Requirements
+## Project Overview
 
-- Python 3.6+
-- Chrome browser installed
-- The following Python packages:
-  - selenium
+This repository contains a retail markdown simulation game that recreates the decision-making process retailers face when determining markdown strategies. The simulation allows users to:
+
+- Test different pricing strategies across a 15-week selling season
+- Compete against multiple retail competitors with their own pricing strategies
+- Analyze profitability outcomes based on different markdown approaches
+- Visualize the impact of markdown decisions on sales and revenue
+
+## Repository Structure
+
+- **01_Selenuim-Try_2.ipynb**: Main Jupyter notebook containing the simulation code and execution logic
+- **action_df.csv**: Contains the various markdown strategies/actions that can be taken
+- **combos_df.csv**: Contains combinations of pricing levels across the 15-week period
+- **instructions.txt**: Detailed explanation of the game rules and operation
+- **README.md**: This file - overview and documentation of the repository
+- **Backup/**: Directory containing backup versions of the project files
+- **Code Old/**: Directory containing previous iterations of the code
+- **01_BACKUP-FINAL/**: Directory containing the final backup version
+
+## Installation Requirements
+
+This project requires:
+
+- Python 3.x
+- Jupyter Notebook
+- Selenium WebDriver (for browser automation)
+- Common data science libraries:
   - pandas
-  - webdriver-manager
+  - numpy
+  - matplotlib
+  - seaborn
 
-## Installation
+## Usage Instructions
 
-1. Install the required packages:
-```
-pip install selenium pandas webdriver-manager
-```
+1. **Setup**: Clone this repository and ensure all dependencies are installed
+2. **Open the Notebook**: Open `01_Selenuim-Try_2.ipynb` in Jupyter Notebook
+3. **Run Simulation**: Execute the notebook cells to run the retail markdown simulation
+4. **Strategy Analysis**:
+   - The simulation allows testing different price markdown strategies over a 15-week period
+   - Price options include keeping the original price (60) or discounting to lower levels (54, 48, 36)
+   - The simulation compares your strategy against competitors and evaluates profitability
 
-2. Make sure you have Chrome browser installed on your system.
+## Game Rules
 
-## Usage
+The retail markdown game simulates a market with multiple retailers selling identical products with:
 
-1. Run the script with:
-```
-python retail_markdown_simulator.py
-```
+- Initial inventory of 100 units
+- 15-week selling season
+- Starting price of $60
+- Optional markdown prices of $54, $48, and $36
+- Market demand influenced by pricing decisions
+- Competitor pricing strategies that adapt to market conditions
 
-2. The script will:
-   - Generate or load all valid price markdown strategies
-   - Run the simulation for each strategy (limited to 10 by default)
-   - Save results to CSV files
+The goal is to maximize profit by choosing an optimal markdown strategy across the 15-week period.
 
-3. The results will be saved in two CSV files:
-   - `week_detail.csv`: Contains details of each week for each simulation
-   - `outcome.csv`: Contains the performance metrics for each simulation
+## Output Files
 
-## Configuration
+The simulation generates visualizations and performance metrics directly in the notebook, including:
 
-You can modify the following parameters in the script:
+- Sales volume by week
+- Revenue performance
+- Profit comparison against competitors
+- Optimal markdown strategy analysis
 
-- `num_simulations`: Number of simulations to run (default: 10)
-- Chrome options: Uncomment the headless option to run without a visible browser
+## Contributing
 
-## Troubleshooting
+Contributions to improve the simulation model or add new features are welcome. Please feel free to submit pull requests with your enhancements.
 
-If you encounter errors:
+## License
 
-1. Make sure Chrome is installed and up to date
-2. Check that your chromedriver is compatible with your Chrome version
-3. Increase the sleep times if the game isn't loading properly
-4. Check the console output for specific error messages 
+This project is provided for educational and research purposes. 
