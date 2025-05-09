@@ -1,15 +1,13 @@
 #!/usr/bin/env python3
 """
-Retail Markdown Game Simulator
-==============================
+Simplified Retail Markdown Game Simulator
+=========================================
 This script automates playing the Retailer Game using predefined price markdown strategies.
-It records results in two CSV files:
-- week_detail.csv: Contains weekly data for each simulation
+It records results in a single CSV file:
 - outcome.csv: Contains final performance metrics for each simulation
 """
 
 import csv
-import time
 import re
 import pandas as pd
 import itertools
@@ -146,7 +144,7 @@ def run_simulation(browser, combo_row, simulation_number):
         simulation_number: Identifier for this simulation
     
     Returns:
-        tuple: (week_data, outcome_data) containing results
+        list: outcome_data containing final results
     """
     wait = WebDriverWait(browser, 2)
     
@@ -173,7 +171,6 @@ def run_simulation(browser, combo_row, simulation_number):
         wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, "#result-table tr:nth-child(2)")))
     
     combo_id = int(combo_row['combo_number'])
-    week_data = []
     
     # Execute the strategy for weeks 2-15 (week 1 is automatic)
     for week in range(2, 16):
@@ -194,32 +191,6 @@ def run_simulation(browser, combo_row, simulation_number):
     
     # Wait for final results
     wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, "#rev")))
-    
-    # Extract results from all weeks
-    try:
-        # Find the results table
-        table = wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, "#result-table")))
-        rows = table.find_elements(By.TAG_NAME, "tr")
-        
-        # Skip header row
-        for row in rows[1:]:
-            cells = row.find_elements(By.TAG_NAME, "td")
-            if len(cells) >= 4:
-                week_num = int(cells[0].text)
-                price = int(cells[1].text)
-                sales = int(cells[2].text)
-                inventory = int(cells[3].text)
-                
-                week_data.append([
-                    simulation_number,
-                    combo_id,
-                    week_num,
-                    price,
-                    sales,
-                    inventory
-                ])
-    except Exception as e:
-        print(f"Error extracting week data: {e}")
     
     # Extract final outcome
     try:
@@ -250,7 +221,7 @@ def run_simulation(browser, combo_row, simulation_number):
         print(f"Error extracting outcome: {e}")
         outcome_data = [simulation_number, combo_id, 0, 0, 0]
     
-    return week_data, outcome_data
+    return outcome_data
 
 def main():
     """Main function to run the simulation"""
@@ -265,8 +236,7 @@ def main():
         action_df.to_csv('action_df.csv', index=False)
         print(f"Generated {len(action_df)} strategy combinations")
     
-    # Initialize data collectors
-    all_week_data = []
+    # Initialize data collector
     all_outcome_data = []
     
     # Initialize browser
@@ -291,22 +261,14 @@ def main():
             
             try:
                 # Run the simulation and collect results
-                week_data, outcome_data = run_simulation(browser, combo_row, simulation_number)
+                outcome_data = run_simulation(browser, combo_row, simulation_number)
                 
                 # Store results
-                all_week_data.extend(week_data)
                 all_outcome_data.append(outcome_data)
                 
                 # Save results every 200 simulations
                 if simulation_number % 200 == 0:
                     print(f"Saving interim results after {simulation_number} simulations...")
-                    
-                    # Save week detail data
-                    week_df = pd.DataFrame(
-                        all_week_data, 
-                        columns=["Simulation Number", "comboID", "Week", "Price", "Sales", "Remaining Inventory"]
-                    )
-                    week_df.to_csv(f"week_detail_interim_{simulation_number}.csv", index=False)
                     
                     # Save outcome data
                     outcome_df = pd.DataFrame(
@@ -329,14 +291,6 @@ def main():
         browser.quit()
         
         # Save final results
-        if all_week_data:
-            week_df = pd.DataFrame(
-                all_week_data, 
-                columns=["Simulation Number", "comboID", "Week", "Price", "Sales", "Remaining Inventory"]
-            )
-            write_header = not os.path.exists("week_detail.csv")
-            week_df.to_csv("week_detail.csv", mode='a', index=False, header=write_header)
-        
         if all_outcome_data:
             outcome_df = pd.DataFrame(
                 all_outcome_data, 
@@ -345,7 +299,7 @@ def main():
             write_header = not os.path.exists("outcome.csv")
             outcome_df.to_csv("outcome.csv", mode='a', index=False, header=write_header)
         
-        print("Simulation completed. Results saved to week_detail.csv and outcome.csv")
+        print("Simulation completed. Results saved to outcome.csv")
 
 if __name__ == "__main__":
     main() 
