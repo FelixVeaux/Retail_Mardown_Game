@@ -18,9 +18,9 @@ This repository contains a retail markdown simulation game that recreates the de
 - **combos_df.csv**: Contains combinations of pricing levels across the 15-week period
 - **instructions.txt**: Detailed explanation of the game rules and operation
 - **README.md**: This file - overview and documentation of the repository
-- **Backup/**: Directory containing backup versions of the project files
-- **Code Old/**: Directory containing previous iterations of the code
-- **01_BACKUP-FINAL/**: Directory containing the final backup version
+- **01_FINAL_DATA/**: Directory containing final data and results
+- **02_Backup_Interim/**: Directory containing interim backup versions
+- **10_Old_Code/**: Directory containing previous iterations of the code
 
 ## Installation Requirements
 
