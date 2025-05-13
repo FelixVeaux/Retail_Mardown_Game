@@ -1,6 +1,5 @@
 # Retail Markdown Game Simulator
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 A comprehensive simulation and optimization tool for retail markdown strategies in competitive markets, helping retailers maximize revenue through data-driven pricing decisions.
 
@@ -15,7 +14,6 @@ A comprehensive simulation and optimization tool for retail markdown strategies 
 - [Usage Instructions](#usage-instructions)
 - [Results](#results)
 - [Contributing](#contributing)
-- [License](#license)
 - [Acknowledgments](#acknowledgments)
 
 ## Overview
@@ -249,9 +247,6 @@ Please follow these guidelines:
 - Add appropriate tests for new features
 - Update the README with any necessary changes
 
-## License
-
-This project is provided for educational and research purposes under the MIT License. See `LICENSE` file for details.
 
 ## Acknowledgments
 
