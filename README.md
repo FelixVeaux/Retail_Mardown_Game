@@ -13,7 +13,7 @@ A comprehensive simulation and optimization tool for retail markdown strategies 
 - [Installation Requirements](#installation-requirements)
 - [Usage Instructions](#usage-instructions)
 - [Results](#results)
-- [Contributing](#contributing)
+- [Contributors](#contributors)
 - [Acknowledgments](#acknowledgments)
 
 ## Overview
@@ -231,22 +231,12 @@ Key visualizations include:
 - Statistical analysis of strategy effectiveness
 - Reward and inventory distribution under RL policies
 
-## Contributing
+## Contributors
 
-Contributions to improve the simulation model, optimization methods, or analysis are welcome:
-
-1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add some amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
-
-Please follow these guidelines:
-- Maintain consistent code formatting
-- Document new functions and modules
-- Add appropriate tests for new features
-- Update the README with any necessary changes
-
+- Felix Veaux
+- Juan David Ovalle
+- Jean Pool Nieto
+- Mirza Abubacker
 
 ## Acknowledgments
 
