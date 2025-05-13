@@ -118,7 +118,6 @@ The project is organized into four main components:
 
 ### 3. Optimization Methods
 - **04_Linear Optimization/01_DynamicProgramming.ipynb**: Implements dynamic programming to find optimal markdown strategies
-- **04_Linear Optimization/02_DynamicProgramming.ipynb**: Alternative dynamic programming implementation
 
 ### 4. Reinforcement Learning
 - **05_Reinforcemente_Learning/environment.py**: Custom RL environment for the markdown problem
