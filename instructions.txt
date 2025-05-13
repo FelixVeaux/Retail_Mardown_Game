@@ -1,69 +1,84 @@
+Retailer Game Simulation: Markdown Optimization Strategy
 
-To create a system that plays the Retailer Game hosted at the provided URL: https://www.randhawa.us/games/retailer/nyu.html
+Game URL: https://www.randhawa.us/games/retailer/nyu.html
 
-There are 15 weeks in the selling season: 
-14 weeks for decisions, since the $60 price is set for the first week. 
-The initial stock is 2000 units. 
-The objective is to maximize the total revenue from the available stock during the 15 weeks
+Objective
+You are tasked with maximizing total revenue by optimally pricing a fashion apparel item over a 15-week selling season. You begin with an inventory of 2,000 units. There are no costs or salvage value—any unsold items at the end of the 15 weeks are discarded with no residual value.
 
-The stock left-over at the end of the 15 weeks is lost. There is no salvage value. 
-There are no costs to worry about since the production costs for the items are already sunk
+Key Rules
+- The list price is $60, and Week 1 must always be sold at this price.
+- From Week 2 onward, you can apply one of the following markdown actions:
+  - Maintain (no change in price)
+  - 10% markdown → $54
+  - 20% markdown → $48
+  - 40% markdown → $36 (final markdown – ends decision-making; all future sales are at this price)
+- Once a markdown is applied, prices cannot be increased.
+- Markdowns are irreversible and sequential:
+  - After a 10% markdown, you cannot go back to maintaining the original price.
+  - After a 20% markdown, you cannot choose 10% or 0%.
+  - A 40% markdown ends further pricing decisions, but weekly simulations continue through Week 15.
 
-Different runs: 
-Each time you play the game, it is as if you are running it for a different item, with each item having its own demand curve. 
-The demand curve has an associated mean and standard deviation for each price
+Demand Model
+- Demand is stochastic and varies each week, even at the same price.
+- Each run simulates a different product with its own demand curve, defined by a unique mean and standard deviation at each price point.
+- While absolute demand levels vary, the relative demand lift from markdowns is consistent across products.
+  - Example: If reducing the price from $60 to $54 increases demand by 25% in one scenario, it is likely to have a similar proportional effect in others.
 
-Demand estimation hint: Demand lift with respect to price is homogenous across items. E.g., if a drop in price from $60 to $54 causes a demand lift of 25% on a given item, it is likely to cause a similar lift on other items. 
-The absolute demand varies from item to item but the relative demand lift from the same price drop is similar across items. 
+Sales Rule
+- Actual weekly sales = min{demand, remaining inventory}
 
+Game Interface
+Each week, you will see the following table:
 
-Optimal markdown strategy to maximise revenue for 2000 t-shirts in 15 Week
+| Week | Price | Sales | Remaining Inventory |
+|------|-------|-------|---------------------|
+| ...  | ...   | ...   | ...                 |
 
-Demand is random from week to week (even at the same price).
+You also have access to the following action buttons:
+- Restart Game (start new simulation)
+- Maintain Price (no markdown)
+- 10% (apply 10% markdown)
+- 20% (apply 20% markdown)
+- 40% (apply 40% markdown and end decisions)
 
+Output and Data Collection
+Each simulation round generates two outputs:
 
-14 decisions (1 per week)
+CSV 1: Weekly Detail ("Week Detail")
+Columns:
+- Simulation Number
+- comboID
+- Week
+- Price
+- Sales
+- Remaining Inventory
 
-Action :
-1.	Maintain
-2.	10%
-3.	20%
-4.	40% (no further actions can be taken after this but week simulations keep going untill week 15)
+CSV 2: Simulation Outcome ("Outcome")
+Columns:
+- Simulation Number
+- comboID
+- Your Revenue
+- Perfect Foresight Strategy
+- Difference (%)
 
-Week 1 is = Maintain (60$)
+Example Output (Displayed In-Game):
 
-If you go to option 2 meaning 10% you cant go bac to option 1. Same if you do 3 you cant do 2 & 1. And if you do 4 it ends the simulation and sells all remaining products at 40% markdown.
+| Week | Price | Sales | Remaining Inventory |
+|------|-------|-------|---------------------|
+| 1    | 60    | 91    | 1909                |
+| 2    | 60    | 109   | 1800                |
+| 3    | 54    | 87    | 1713                |
+| 4    | 48    | 175   | 1538                |
+| …    | …     | …     | …                   |
+| 10   | 36    | 136   | 0                   |
+| …    | 36    | 0     | 0                   |
 
-Strategy that adapts to how the game adapts. The demand changes. It is not the same every time.
+Summary Metrics (End of Simulation):
+- Your revenue: $84,726
+- Perfect foresight revenue: $98,946
+- Difference: 14.4%
 
+Summary
+This game challenges you to design a dynamic markdown strategy that adapts to uncertain and evolving demand patterns. Your goal is to develop an approach that consistently maximizes revenue while balancing markdown depth, timing, and remaining inventory.
 
-Sales = Min{Demand, Inventory}
-
-You are in charge of selling 2,000 items of a brand new fashion apparel. Your goal is to select the optimal pricing strategy to maximize revenues. The list price of the item is $60, and it must be sold at the list price for at least one week. After this, the item may be discounted to $54 (a 10% discount), to $48 (a 20% discount), or to $36 (a 40% discount). Once lowered, the price may not be increased.
-The sales season is 15 weeks long. Production lead times are long enough that additional items cannot be procured during the sales season. All items remaining at the end of the sales horizon will be discarded at $0 value
-
-
-The game will show you for each week in table format: Week, Price, Sales, Remaining Inventory.
-You will also have 5 buttons you can click : « restart game » (it starts the next game), « maintain price » (action A : stays at current price), « 10% » (Action B : 10% markdown), « 20% » (Action C : 20% markdown), « 40% » (Action C : 40% markdown)
-
-The URL : URL: https://www.randhawa.us/games/retailer/nyu.html
-
-
-I want the output of each simulation round to be saved to 2 CSV. 1 CSV with all simulation detail week by week and another CSV with the outcome details.
-CSV 1 (« Week detail ») will have columns : Simulation Number, comboID, Week, Price, Sales, Remaining Inventory
-CSV 2 (« Outcome ») will have columns : Simulation Number, comboID, Your revenue, Perfect foresight strategy, Difference (%)
-
-This is how the output information you have to collect is:
-<table id="result-table" cellspacing="0" title="Weekly performance">
-<thead>
-<tr>
-<th>Week</th>
-<th>Price</th>
-<th>Sales</th>
-<th>Remaining Inventory</th>
-</tr>
-<tr><td>1</td><td>60</td><td>91</td><td>1909</td></tr><tr><td>2</td><td>60</td><td>109</td><td>1800</td></tr><tr><td>3</td><td>54</td><td>87</td><td>1713</td></tr><tr><td>4</td><td>48</td><td>175</td><td>1538</td></tr><tr><td>5</td><td>48</td><td>184</td><td>1354</td></tr><tr><td>6</td><td>36</td><td>330</td><td>1024</td></tr><tr><td>7</td><td>36</td><td>322</td><td>702</td></tr><tr><td>8</td><td>36</td><td>328</td><td>374</td></tr><tr><td>9</td><td>36</td><td>238</td><td>136</td></tr><tr><td>10</td><td>36</td><td>136</td><td>0</td></tr><tr><td>11</td><td>36</td><td>0</td><td>0</td></tr><tr><td>12</td><td>36</td><td>0</td><td>0</td></tr><tr><td>13</td><td>36</td><td>0</td><td>0</td></tr><tr><td>14</td><td>36</td><td>0</td><td>0</td></tr><tr><td>15</td><td>36</td><td>0</td><td>0</td></tr></thead>
-</table>
-<div style="position:relative;top:10px;left:6px;"><em>Your revenue:</em> <em id="rev" style="color: rgb(52, 102, 205);">$84,726</em><em id="perfect0">, Perfect foresight strategy: </em><em id="perfect" style="color: rgb(135, 0, 0);">$98,946</em><em id="percentage">, Difference: 14.4%</em>
-</div>
-
+Play the game here: https://www.randhawa.us/games/retailer/nyu.html
